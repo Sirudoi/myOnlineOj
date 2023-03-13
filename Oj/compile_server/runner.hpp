@@ -54,12 +54,12 @@ namespace ns_runner
             std::string stdout_path = PathUtil::BuildStdoutPath(file_name);
             std::string stderr_path = PathUtil::BuildStderrPath(file_name);
 
-            {
-                // FOR TEST
-                DeleteUtil::DeleteFile(stdin_path);
-                DeleteUtil::DeleteFile(stdout_path);
-                DeleteUtil::DeleteFile(stderr_path);
-            }
+            // {
+            //     // FOR TEST
+            //     DeleteUtil::DeleteFile(stdin_path);
+            //     DeleteUtil::DeleteFile(stdout_path);
+            //     DeleteUtil::DeleteFile(stderr_path);
+            // }
 
             // 在父进程创建文件，方便错误处理
             int _stdin = open(stdin_path.c_str(), O_CREAT | O_RDONLY, 0644);
@@ -87,6 +87,8 @@ namespace ns_runner
 
                 //执行用户程序
                 execl(exe_path.c_str(), exe_path.c_str(), nullptr);
+
+                return 0;
             }
             //父进程
             else if (ret > 0)
@@ -103,7 +105,7 @@ namespace ns_runner
             }
             else
             {
-                LOG(WARN) << " 子进程创建失败" << std::endl;
+                LOG(WARN) << " [子进程创建失败]" << std::endl;
                 return -1;
             }
         }

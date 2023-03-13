@@ -7,7 +7,7 @@
 
 #include <jsoncpp/json/json.h>
 
-namespace ne_compile_run
+namespace ns_compile_run
 {
     using namespace ns_log;
     using namespace ns_util;
@@ -42,7 +42,7 @@ namespace ne_compile_run
 
             // 获取题目资源限制
             int cpu_limit = in_json["cpu_limit"].asInt();
-            int mem_limit = in_json["men_limit"].asInt();
+            int mem_limit = in_json["mem_limit"].asInt();
 
             // 生成唯一的文件名
             std::string file_name = FileUtil::UniqueName();
@@ -53,7 +53,7 @@ namespace ne_compile_run
             Json::Value out_json;
             
             int start_status = 0; // StartCplAndRun()返回值，和差错处理保持一直
-            int run_status; // ExecuteService()返回值，goto里面不给定义变量
+            int run_status = 0; // ExecuteService()返回值，goto里面不给定义变量
 
             if (code.size() == 0)
             {
@@ -96,12 +96,16 @@ namespace ne_compile_run
         ERROR_HANDING_END:
             out_json["status"] = start_status; // 存储返回的status
             out_json["reason"] = FileUtil::DescripeStatus(start_status); // 根据status返回其描述
-            // 执行成功，返回三个流
+            // 执行成功，返回两个流，stdin不用管，程序输入是上面input获取的
             if (start_status == 0)
             {
-                out_json["stdin"] = FileUtil::ReadFile(PathUtil::BuildStdinPath(file_name));
-                out_json["stdout"] = FileUtil::ReadFile(PathUtil::BuildStdoutPath(file_name));
-                out_json["stderr"] = FileUtil::ReadFile(PathUtil::BuildStderrPath(file_name));
+                std::string out;
+                std::string err;
+                FileUtil::ReadFile(PathUtil::BuildStdoutPath(file_name), &out);
+                FileUtil::ReadFile(PathUtil::BuildStderrPath(file_name), &err);
+                
+                out_json["stdout"] = out;
+                out_json["stderr"] = err;
             }
 
             Json::StyledWriter write;

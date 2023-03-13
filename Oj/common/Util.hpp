@@ -2,16 +2,40 @@
 
 // 工具类
 #include <string>
+#include <fstream>
 #include <iostream>
 #include <unistd.h>
-#include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/time.h>
+#include <sys/types.h>
+
 
 namespace ns_util
 {
     // 临时文件路径
     const std::string g_tmp_path = "./tmp/";
+
+    class TimeUtil
+    {
+    public:
+        static std::string GetTimeStamp()
+        {
+            struct timeval st;
+            gettimeofday(&st, nullptr);
+
+            // 返回1970至今的second
+            return std::to_string(st.tv_sec);
+        }
+
+        // 获得微秒级时间戳
+        static std::string GetTimeMicro()
+        {
+            struct timeval st;
+            gettimeofday(&st, nullptr);
+
+            return std::to_string(st.tv_sec) + "_" + std::to_string(st.tv_usec);;
+        }
+    };
 
     class PathUtil
     {
@@ -81,20 +105,45 @@ namespace ns_util
         static std::string UniqueName()
         {
             // TODO
-
-            return "";
+            return TimeUtil::GetTimeMicro();
         }
 
         // 读取指定文件，返回其内容
-        static std::string ReadFile(const std::string &file_path)
+        static bool ReadFile(const std::string &file_path, std::string* content, bool flag = false)
         {
-            // TODO
+            std::ifstream ifs(file_path.c_str(), std::ifstream::in);
+            (*content).clear();
+
+            if (!ifs.is_open())
+            {
+                return false;
+            }
+
+            std::string line;
+            // getline不保留换行符
+            // 换行符需要内部控制，因此传入一个flag，如果外部需要保留换行符，传入true
+            while (getline(ifs, line))
+            {
+                (*content) += line;
+                if (flag) (*content) += '\n';
+            }
+
+            ifs.close();
+            return true;
         }
 
         // 将指定内容写入文件
-        static int WriteFile(const std::string &file_path, const std::string &code)
+        static bool WriteFile(const std::string &file_path, const std::string &code)
         {
-            // TODO
+            std::ofstream ofs(file_path.c_str(), std::iostream::out);
+            if (!ofs.is_open())
+            {
+                return false;
+            }
+            ofs.write(code.c_str(), code.size());
+            ofs.close();
+
+            return true;
         }
 
         // 根据传入信号返回信号描述
@@ -117,10 +166,13 @@ namespace ns_util
                 desc = "运行成功";
                 break;
             case 6:
-                desc = "运行超过限制时间，请检查是否存在死循环";
+                desc = "内存申请达到上限";
+                break;
+            case 11:
+                desc = "Segmentation fault";
                 break;
             case 24:
-                desc = "内存申请超过限制空间";
+                desc = "运行超过限制时间，请检查是否存在死循环";
                 break;
             default:
                 desc = "未知信号错误,status=";
@@ -129,19 +181,6 @@ namespace ns_util
             }
 
             return desc;
-        }
-    };
-
-    class TimeUtil
-    {
-    public:
-        static std::string GetTimeStamp()
-        {
-            struct timeval st;
-            gettimeofday(&st, nullptr);
-
-            // 返回1970至今的second
-            return std::to_string(st.tv_sec);
         }
     };
 

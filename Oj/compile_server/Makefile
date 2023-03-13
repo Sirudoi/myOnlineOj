@@ -1,10 +1,10 @@
-COMPLIE_SERVER=complie_server
+COMPILE_SERVER=compile_server
 
 cc=g++
 
-$(COMPLIE_SERVER):complie_server.cc
+$(COMPILE_SERVER):compile_server.cc
 	$(cc) -o $@ $^ -std=c++11 -ljsoncpp
 
 .PHONY:clean
 clean:
-	rm -f $(COMPLIE_SERVER)
+	rm -f $(COMPILE_SERVER)

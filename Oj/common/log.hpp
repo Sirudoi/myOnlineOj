@@ -17,7 +17,7 @@ namespace ns_log
     };
 
     // 将日志信息用标准输出流返回
-    std::ostream& Log(const std::string& level, const std::string& file_name, int line)
+    inline std::ostream& Log(const std::string& level, const std::string& file_name, int line)
     {
         std::string log_msg;
 
