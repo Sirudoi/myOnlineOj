@@ -29,13 +29,6 @@ namespace ns_complier
                 std::string exe_path = PathUtil::BuildExePath(file_name);      // 构建xx.exe路径
                 std::string stderr_path = PathUtil::BuildCompliErrPath(file_name); // 构建xx.stderr路径
 
-                {
-                    // FOR TEST
-                    // 检查是编译过，编译过则删除临时文件
-                    DeleteUtil::DeleteFile(exe_path);
-                    DeleteUtil::DeleteFile(stderr_path);
-                }
-
                 // 1.创建重定向标准错误流文件描述符
                 int new_stderr = open(stderr_path.c_str(), O_CREAT | O_WRONLY, 0644);
                 if (new_stderr < 0)
@@ -56,7 +49,6 @@ namespace ns_complier
                 execlp("g++", "g++", "-o", exe_path.c_str() , src_path.c_str(), "-std=c++11", nullptr);
 
                 exit(1);
-
             }
 
             //父进程

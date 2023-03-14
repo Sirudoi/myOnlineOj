@@ -41,8 +41,9 @@ namespace ns_compile_run
             std::string input = in_json["input"].asString();
 
             // 获取题目资源限制
-            int cpu_limit = in_json["cpu_limit"].asInt();
-            int mem_limit = in_json["mem_limit"].asInt();
+            int cpu_limit = std::stoi(in_json["cpu_limit"].asString());
+            int mem_limit = std::stoi(in_json["mem_limit"].asString());
+            LOG(INFO) << " [获取用户输入成功]" << std::endl;
 
             // 生成唯一的文件名
             std::string file_name = FileUtil::UniqueName();
@@ -107,9 +108,20 @@ namespace ns_compile_run
                 out_json["stdout"] = out;
                 out_json["stderr"] = err;
             }
+            else if (start_status == -2)
+            {
+                std::string cmpl_err;
+                FileUtil::ReadFile(PathUtil::BuildCompliErrPath(file_name), &cmpl_err);
+
+                out_json["compile_err"] = cmpl_err;
+            }
 
             Json::StyledWriter write;
             *out_str = write.write(out_json);
+
+            FileUtil::DeleteFile(file_name);
+
+            return 0;
         }
     };
 }
