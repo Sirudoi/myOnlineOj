@@ -5,8 +5,8 @@
 void TestCase1()
 {
     vector<int> nums = {1, 2, 3, 2, 2, 2, 5, 4, 2};
-    int ret = Solution().majorityElement(nums);
-    if (ret == 2)
+    int ret = Solution().MaxNumber(nums);
+    if (ret == 5)
     {
         cout << "通过用例通过:1/2..." << endl;  
     }
@@ -21,16 +21,16 @@ void TestCase1()
 
 void TestCase2()
 {
-    vector<int> nums = {1, 6, 6, 7, 9, 6, 6};
-    int ret = Solution().majorityElement(nums);
-    if (ret == 6)
+    vector<int> nums = {1,3,5,7,9,6,6};
+    int ret = Solution().MaxNumber(nums);
+    if (ret == 9)
     {
         cout << "通过用例通过:2/2..." << endl;  
     }
     else
     {
-        cout << "用例输入:[1, 6, 6, 7, 9, 6, 6]" << endl;
-        cout << "预期输出:6 你的输出:" << ret << endl;
+        cout << "用例输入:[1, 3, 5, 7, 9, 6, 6]" << endl;
+        cout << "预期输出:9 你的输出:" << ret << endl;
         exit(0);
     }
 }

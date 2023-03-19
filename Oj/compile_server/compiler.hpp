@@ -46,7 +46,7 @@ namespace ns_complier
                 // 2.子进程进行编译工作
                 // g++ -o target src -std=c++11
                 // 构建target和src，利用进程替换执行编译行为
-                execlp("g++", "g++", "-o", exe_path.c_str() , src_path.c_str(), "-std=c++11", nullptr);
+                execlp("g++", "g++", "-o", exe_path.c_str() , src_path.c_str(), "-std=c++11", "-D", "INCLUDE_HEAD", nullptr);
 
                 exit(1);
             }

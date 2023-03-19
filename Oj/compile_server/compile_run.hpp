@@ -24,12 +24,12 @@ namespace ns_compile_run
         // **************************************************
         // 客户端：
         // status:用户程序运行的状态码
-        // 
+        //
         // stdout：程序输出结果
         // stderr：程序错误输出结果
         // **************************************************
     public:
-        static int StartCplAndRun(const std::string& in_str, std::string* out_str)
+        static int StartCplAndRun(const std::string &in_str, std::string &out_str)
         {
             // 进行反序列化
             Json::Value in_json;
@@ -52,9 +52,9 @@ namespace ns_compile_run
             // out_json[status]:表示返回情况
             // out_json[reason]:返回值描述
             Json::Value out_json;
-            
+
             int start_status = 0; // StartCplAndRun()返回值，和差错处理保持一直
-            int run_status = 0; // ExecuteService()返回值，goto里面不给定义变量
+            int run_status = 0;   // ExecuteService()返回值，goto里面不给定义变量
 
             if (code.size() == 0)
             {
@@ -63,14 +63,14 @@ namespace ns_compile_run
             }
 
             // 生成src.cpp，将代码写入到里面
-            if ( !FileUtil::WriteFile(PathUtil::BuildSrcPath(file_name), code) )
+            if (!FileUtil::WriteFile(PathUtil::BuildSrcPath(file_name), code))
             {
                 start_status = -1;
                 goto ERROR_HANDING_END;
             }
 
             // 编译服务
-            if ( !Compiler::CompileService(file_name) )
+            if (!Compiler::CompileService(file_name))
             {
                 start_status = -2;
                 goto ERROR_HANDING_END;
@@ -93,32 +93,33 @@ namespace ns_compile_run
                 // 内部报错
                 start_status = -1;
             }
-            
+
         ERROR_HANDING_END:
-            out_json["status"] = start_status; // 存储返回的status
+            out_json["status"] = start_status;                           // 存储返回的status
             out_json["reason"] = FileUtil::DescripeStatus(start_status); // 根据status返回其描述
             // 执行成功，返回两个流，stdin不用管，程序输入是上面input获取的
             if (start_status == 0)
             {
                 std::string out;
                 std::string err;
-                FileUtil::ReadFile(PathUtil::BuildStdoutPath(file_name), &out);
-                FileUtil::ReadFile(PathUtil::BuildStderrPath(file_name), &err);
-                
+                FileUtil::ReadFile(PathUtil::BuildStdoutPath(file_name), out, true);
+                FileUtil::ReadFile(PathUtil::BuildStderrPath(file_name), err, true);
+
                 out_json["stdout"] = out;
                 out_json["stderr"] = err;
             }
             else if (start_status == -2)
             {
                 std::string cmpl_err;
-                FileUtil::ReadFile(PathUtil::BuildCompliErrPath(file_name), &cmpl_err);
+                FileUtil::ReadFile(PathUtil::BuildCompliErrPath(file_name), cmpl_err, true);
 
                 out_json["compile_err"] = cmpl_err;
             }
 
             Json::StyledWriter write;
-            *out_str = write.write(out_json);
+            out_str = write.write(out_json);
 
+            // 删除临时文件
             FileUtil::DeleteFile(file_name);
 
             return 0;

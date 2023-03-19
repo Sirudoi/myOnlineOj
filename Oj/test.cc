@@ -5,7 +5,33 @@
 #include <sys/resource.h>
 #include "./common/log.hpp"
 #include <jsoncpp/json/json.h>
+#include <ctemplate/template.h>
+
 using namespace std;
+
+// 测试ctemplate
+int main()
+{
+    std::string in_html = "./test.html";
+    std::string value = "这是测试用例";
+
+    // 形成字典
+    ctemplate::TemplateDictionary root("test");
+    root.SetValue("key", value);
+
+    // 获取被渲染的网页对象
+    // 第一个参数：获取到的网页内容，第二个参数：是否要去除空行空格
+    ctemplate::Template* p = ctemplate::Template::GetTemplate(in_html, ctemplate::DO_NOT_STRIP);
+
+    // 添加字典数据到网页
+    std::string out_html;
+    p->Expand(&out_html, &root);
+
+    std::cout << out_html << std::endl;
+
+    return 0;
+}
+
 
 // 测试时间戳转换
 // {
@@ -48,37 +74,31 @@ using namespace std;
 // }
 
 // 测试json读取
-int main()
-{
-    // 进行反序列化
-    // Json::Value in_json;
-    // Json::Reader reader;
-    // reader.parse(in_str, in_json); // 将传入的序列化字符串反序列化到in_json中
-    // {
-    //     //*********************************************
-    //     //DEBUG
-    //     LOG(INFO) << " [反序列化用户json]" << std::endl;
-    //     std::cout << in_json << std::endl;
-    //     //*********************************************
-    // }
-
-    // // 获得用户代码和用户输入
-    // std::string code = in_json["code"].asString();
-    // {
-    //     //*********************************************
-    //     //DEBUG
-    //     LOG(INFO) << " [读取用户code]" << std::endl;
-    //     std::cout << code << std::endl;
-    //     //*********************************************
-
-    // }
-    // std::string input = in_json["input"].asString();
-
-    // // 获取题目资源限制
-    // int cpu_limit = in_json["cpu_limit"].asInt();
-    // int mem_limit = in_json["mem_limit"].asInt();
-
- 
-
-    return 0;
-}
+// int main()
+// {
+//     // 进行反序列化
+//     // Json::Value in_json;
+//     // Json::Reader reader;
+//     // reader.parse(in_str, in_json); // 将传入的序列化字符串反序列化到in_json中
+//     // {
+//     //     //*********************************************
+//     //     //DEBUG
+//     //     LOG(INFO) << " [反序列化用户json]" << std::endl;
+//     //     std::cout << in_json << std::endl;
+//     //     //*********************************************
+//     // }
+//     // // 获得用户代码和用户输入
+//     // std::string code = in_json["code"].asString();
+//     // {
+//     //     //*********************************************
+//     //     //DEBUG
+//     //     LOG(INFO) << " [读取用户code]" << std::endl;
+//     //     std::cout << code << std::endl;
+//     //     //*********************************************
+//     // }
+//     // std::string input = in_json["input"].asString();
+//     // // 获取题目资源限制
+//     // int cpu_limit = in_json["cpu_limit"].asInt();
+//     // int mem_limit = in_json["mem_limit"].asInt();
+//     return 0;
+// }

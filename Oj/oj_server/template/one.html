@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<!-- 声明文档类型-->
+<html lang="en">
+<!-- 确定语言形态 -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{number}}.{{title}}</title>
+    <!-- 这个顺序引入更规范 -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript"
+        charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js" type="text/javascript"
+        charset="utf-8"></script>
+
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+    <style>
+        * {
+            /* 消除网页的默认外边距 */
+            margin: 0px;
+            /* 消除网页的默认内边距 */
+            padding: 0px;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 设置鼠标事件 */
+        .container .nav_con a:hover {
+            background-color: rgb(178, 188, 194);
+        }
+
+        /* 导航栏设置 */
+        #nav {
+            height: 58px;
+            background: black;
+        }
+
+        #nav .nav_con {
+            width: 1002px;
+            height: 58px;
+            background: black;
+            margin: 0 auto;
+        }
+
+        #nav .nav_con li {
+            width: 118px;
+            height: 58px;
+            float: left;
+            background: black;
+            /* 左右居中 */
+            text-align: center;
+            /* 上下居中 */
+            line-height: 58px;
+            border-left: 1px solid #4a4a4a;
+            font-size: 18px;
+        }
+
+        /* 导航栏颜色 */
+        .nav_con li a {
+            color: white;
+        }
+
+        .margin-left {
+            margin-left: 25px;
+            border-left: none !important;
+        }
+
+
+        /* 公共样式的footer */
+        .footer_con {
+            height: 82px;
+            /* background: #cccccc; */
+        }
+
+        .footer_con .footer_l {
+            height: 58px;
+            float: left;
+            /* background: red; */
+            padding-top: 24px;
+        }
+
+        .footer_con .footer_l a {
+            font-size: 12px;
+            float: left;
+            color: #868686;
+            border-right: 1px solid #868686;
+            /* padding:字体和边框的距离哈 */
+            padding: 0 7px;
+            padding-left: 15px;
+        }
+
+        .footer_con .footer_l .footer-right {
+            border-right: none !important;
+        }
+
+        .footer_con .footer_r {
+            height: 57px;
+            color: #8a8a8a;
+            font-size: 12px;
+            padding-top: 25px;
+            /* background: pink; */
+            padding-right: 21px;
+            float: right;
+        }
+
+        /* 编写框设置 */
+        .container .part1 {
+            width: 100%;
+            height: 800px;
+            overflow: hidden;
+        }
+
+        .container .part1 .left_desc {
+            width: 35%;
+            height: 800px;
+            float: left;
+            overflow: scroll;
+        }
+
+        /* desc部分标题的上左边距 */
+        .container .part1 .left_desc h3 {
+            padding-top: 20px;
+            padding-left: 20px;
+        }
+
+        /* desc部分描述的上左边距 */
+        .container .part1 .left_desc pre {
+            padding-top: 20px;
+            padding-left: 20px;
+            font-size: medium;
+            /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .container .part1 .right_code {
+            width: 65%;
+            float: right;
+        }
+
+        .container .part1 .right_code .ace_editor {
+            height: 800px;
+        }
+
+        /* 下边栏的左右宽 */
+        .container .part2 {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .container .part2 .result {
+            width: 35%;
+            float: left;
+        }
+
+        .container .part2 .result p {
+            margin-top: 15px;
+            margin-left: 15px;
+        }
+
+        .container .part2 .result pre {
+            margin-top: 5px;
+            margin-left: 15px;
+            font-size: medium;
+        }
+
+        .container .part2 .btn-submit {
+            width: 120px;
+            height: 50px;
+            font-size: large;
+            float: right;
+            background-color: #26bb9c;
+            color: #FFF;
+            /* 给按钮带上圆角 */
+            /* border-radius: 1ch; */
+            border: 0px;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+
+        .container .part2 button:hover {
+            color: rgb(54, 117, 73);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="nav">
+            <!-- 导航栏版心部分 -->
+            <div class="nav_con">
+                <ul>
+                    <li class="margin-left"><a href="http://175.178.42.143:8080/">首页</a></li>
+                    <li><a href="/questions_list">题库</a></li>
+                    <li><a href="#">社区</a></li>
+                    <li><a href="#">求职</a></li>
+                    <li><a href="#">讨论</a></li>
+                    <li><a href="https://blog.csdn.net/weixin_57371426?type=blog">博客</a></li>
+                    <li><a href="https://gitee.com/sirudoi">码云<br></a></li>
+                    <li><a href="#">登录</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="part1">
+            <div class="left_desc">
+                <h3><span id="number">{{number}}</span>.{{title}} {{difficulty}}</h3>
+                <pre>{{desc}}</pre>
+            </div>
+
+            <div class="right_code">
+                <pre id="code" class="ace_editor"><textarea class="ace_text-input">{{head}}</textarea></pre>
+            </div>
+        </div>
+
+        <!-- 提交并且得到结果，并显示 -->
+        <div class="part2">
+            <div class="result">
+                <p></p>
+            </div>
+            <button class="btn-submit" onclick="submit()">提交代码</button>
+        </div>
+    </div>
+
+    <script>
+        //初始化对象
+        editor = ace.edit("code");
+
+        //设置风格和语言（到github上相应目录查看）
+        // 主题大全：http://www.manongjc.com/detail/25-cfpdrwkkivkikmk.html
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/c_cpp");
+
+        // 字体大小
+        editor.setFontSize(16);
+
+        // 设置默认制表符的大小:
+        editor.getSession().setTabSize(4);
+
+        // 设置只读（true时只读，用于展示代码）
+        editor.setReadOnly(false);
+
+        // 启用提示菜单
+        ace.require("ace/ext/language_tools");
+        editor.setOptions({
+            enableBasicAutocompletion: true,
+            enableSnippets: true,
+            enableLiveAutocompletion: true
+        });
+
+        function submit() {
+            // 1. 收集当前页 题号和代码
+            var code = editor.getSession().getValue(); // 通过ace直接获取编写的内容
+            var number = $("#number").text(); // 通过span标签获得题号
+            var judge_url = "/judge/" + number; // 凭借服务
+
+            // 2. 构建json，并向后台发起请求
+            // var out_json='';
+            $.ajax({
+                async: false,
+                method: 'Post',
+                url: judge_url,
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({
+                    'code': code,
+                    'input': ''
+                }),
+                success: function (data) {
+                    print_result(data);
+                }
+            });
+
+            // 3. 得到结果，解析并显示到 result中
+            function print_result(out_json) {
+                // console.log(out_json);
+                var result = $(".container .part2 .result");
+                // 清空上次结果
+                result.empty();
+
+                // 获得状态码和返回结果
+                var _status = out_json.status;
+                var _reason = out_json.reason;
+
+                // 把结果追加到result标签中
+                var reason_lable = $("<p>", {
+                    text: _reason
+                });
+                reason_lable.appendTo(result);
+
+                // 正常返回，获得标准输出流和标准错误流
+                if (_status == 0) {
+                    var _stdout = out_json.stdout;
+                    var _stderr = out_json.stderr;
+
+                    var out_lable = $("<pre>", {
+                        text: _stdout
+                    });
+
+                    var err_lable = $("<pre>", {
+                        text: _stderr
+                    });
+
+                    // 追加到result标签
+                    out_lable.appendTo(result);
+                    err_lable.appendTo(result);
+                }
+                else {
+                    //编译出错
+                    var cmlerr = out_json.compile_err;
+                    var cmlerr_lable = $("<pre>", {
+                        text: cmlerr
+                    });
+                    cmlerr_lable.appendTo(result);
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

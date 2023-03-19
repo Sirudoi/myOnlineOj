@@ -50,6 +50,7 @@
         "mutex": "cpp",
         "ratio": "cpp",
         "system_error": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "unordered_set": "cpp"
     }
 }

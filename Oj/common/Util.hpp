@@ -2,6 +2,7 @@
 
 // 工具类
 #include <string>
+#include <vector>
 #include <fstream>
 #include <iostream>
 #include <unistd.h>
@@ -109,10 +110,10 @@ namespace ns_util
         }
 
         // 读取指定文件，返回其内容
-        static bool ReadFile(const std::string &file_path, std::string* content, bool flag = false)
+        static bool ReadFile(const std::string &file_path, std::string& content, bool flag = false)
         {
             std::ifstream ifs(file_path.c_str(), std::ifstream::in);
-            (*content).clear();
+            content.clear();
 
             if (!ifs.is_open())
             {
@@ -124,8 +125,8 @@ namespace ns_util
             // 换行符需要内部控制，因此传入一个flag，如果外部需要保留换行符，传入true
             while (getline(ifs, line))
             {
-                (*content) += line;
-                if (flag) (*content) += '\n';
+                content += line;
+                if (flag) content += '\n';
             }
 
             ifs.close();
@@ -206,12 +207,12 @@ namespace ns_util
     {
     public:
         // line：需要切分的字符串 
-        // p_tokens：输出型参数，按照op切分后返回结果
+        // tokens：输出型参数，按照op切分后返回结果
         // op：按照op字符做字符串切分
-        static bool CutString(const std::string& line, std::vector<std::string>* p_tokens, const std::string& op)
+        static bool CutString(const std::string& line, std::vector<std::string>& tokens, const std::string& op)
         {
             // 切分后返回的数组，需要切分字符串，切分字符，批处理空切分是否打开
-            boost::split(*p_tokens, line, boost::is_any_of(op), boost::algorithm::token_compress_on);
+            boost::split(tokens, line, boost::is_any_of(op), boost::algorithm::token_compress_on);
 
             return true;
         }

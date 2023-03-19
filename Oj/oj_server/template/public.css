@@ -1,0 +1,85 @@
+@charset "utf-8";
+ 
+/* 公共区域版心宽度一样，左右居中 */
+ 
+ 
+/* .header-wrap {
+    width: 1100px;
+    height: 62px;
+    margin: 0 auto;
+} */
+#nav {
+    height: 58px;
+    background: black;
+}
+ 
+#nav .nav_con {
+    width: 1002px;
+    height: 58px;
+    background: black;
+    margin: 0 auto;
+}
+ 
+ 
+/* 导航横向排列 */
+ 
+#nav .nav_con li {
+    width: 118px;
+    height: 58px;
+    float: left;
+    background: black;
+    /* 左右居中 */
+    text-align: center;
+    /* 上下居中 */
+    line-height: 58px;
+    border-left: 1px solid #4a4a4a;
+    font-size: 18px;
+}
+
+/* 导航栏颜色 */
+.nav_con li a {
+    color: white;
+}
+ 
+.margin-left {
+    margin-left: 25px;
+    border-left: none!important;
+}
+ 
+ 
+/* 公共样式的footer */
+.footer_con {
+    height: 82px;
+    /* background: #cccccc; */
+}
+ 
+.footer_con .footer_l {
+    height: 58px;
+    float: left;
+    /* background: red; */
+    padding-top: 24px;
+}
+ 
+.footer_con .footer_l a {
+    font-size: 12px;
+    float: left;
+    color: #868686;
+    border-right: 1px solid #868686;
+    /* padding:字体和边框的距离哈 */
+    padding: 0 7px;
+    padding-left: 15px;
+}
+ 
+.footer_con .footer_l .footer-right {
+    border-right: none!important;
+}
+ 
+.footer_con .footer_r {
+    height: 57px;
+    color: #8a8a8a;
+    font-size: 12px;
+    padding-top: 25px;
+    /* background: pink; */
+    padding-right: 21px;
+    float: right;
+}

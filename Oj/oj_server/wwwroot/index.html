@@ -1,13 +1,167 @@
 <!DOCTYPE html>
+<!-- 声明文档类型-->
 <html lang="en">
+<!-- 确定语言形态 -->
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--控制网页的编码格式 utf-8 国际性编码-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的在线OJ平台</title>
+    <!--控制视口比例以及缩放-->
+    <title>首页</title>
+    <!-- 先引入重置样式表和公共样式表以及主页样式表 -->
+    <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="./public.css">
+    <link rel="stylesheet" href="./index.css">
+    <!-- 这个顺序引入更规范 -->
 </head>
+
 <body>
-    <h1>欢迎来到我的在线OJ平台</h1>
-    <p>This is My OJ Platform</p>
+    <!-- 导航栏平铺部分：会显示黑色 -->
+    <div id="nav">
+        <!-- 导航栏版心部分 -->
+        <div class="nav_con">
+            <ul>
+                <li class="margin-left"><a href="#">首页</a></li>
+                <li><a href="/questions_list">题库</a></li>
+                <li><a href="#">社区</a></li>
+                <li><a href="#">求职</a></li>
+                <li><a href="#">讨论</a></li>
+                <li><a href="#">竞赛</a></li>
+                <li><a href="https://blog.csdn.net/weixin_57371426?type=blog">博客</a></li>
+                <li><a href="https://gitee.com/sirudoi">码云</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 这是网页的头部版心盒子 -->
+    <div class="header_con">
+        <!-- h1里面放logo哦 -->
+        <h1>
+            <img src="./#" alt="">
+        </h1>
+        <!-- 头部右侧表单标签-->
+        <form action="">
+            <input type="text" class="search" value="SEARCH(暂未实现)...">
+            <div>
+                <input type="button" class="btn">
+            </div>
+        </form>
+    </div>
+
+    <!-- 新闻列表的版心部分 ! -->
+    <div class="news_con">
+        <!-- 最左侧的盒子 -->
+        <div class="news_l">
+            <h3 class="news_title">我的日常</h3>
+            <ul class="news_list">
+                <li>
+                    <a>欢迎来的我的OnlineJudge平台...</a>
+                    <span>2023-3-15</span>
+                </li>
+                <li>
+                    <a>欢迎来的我的OnlineJudge平台...</a>
+                    <span>2023-3-16</span>
+                </li>
+                <li>
+                    <a>欢迎来的我的OnlineJudge平台...</a>
+                    <span>2023-3-17</span>
+                </li>
+                <li>
+                    <a>欢迎来的我的OnlineJudge平台...</a>
+                    <span>2023-3-18</span>
+                </li>
+            </ul>
+
+        </div>
+        <!-- 中间的盒子-->
+        <div class="news_c">
+            <h3 class="news_title">我的日常</h3>
+            <p class="txt1">震惊，每天散步居然可以...</p>
+        </div>
+        <!-- 右边的盒子 -->
+        <div class="news_r">
+            <h3 class="news_title">我的日常</h3>
+            <p class="txt3">震惊，每天做题居然可以</p>
+            <a href="#"><img src="./images/btn_img_05.jpg" alt=""></a>
+
+        </div>
+    </div>
+    <!-- 市场项目那一部分 -->
+    <div class="case_con">
+        <h3><br>全站排名</h3>
+        <div class="case_box">
+            <dl>
+                <dt><img src="./images/banner1.jpg" alt=""></dt>
+                <dd>兄弟们我学会动规了</dd>
+            </dl>
+            <dl>
+                <dt><img src="./images/banner1.jpg" alt=""></dt>
+                <dd>我查一点就学会动规了</dd>
+            </dl>
+            <dl>
+                <dt><img src="./images/banner1.jpg" alt=""></dt>
+                <dd>我真的学不会动规</dd>
+            </dl>
+            <dl>
+                <dt><img src="./images/banner1.jpg" alt=""></dt>
+                <dd>求求你们别卷了</dd>
+            </dl>
+        </div>
+    </div>
+    <!-- 产品中心那一部分的平铺-->
+    <div id="links">
+        <!-- 这个顺序引入更规范 -->
+        <div class="links_con">
+            <!-- 版心部分 -->
+            <!-- 左边的盒子 -->
+            <div class="links_l">
+                <h3 class="links_title">快捷导航</h3>
+                <ul class="links_list">
+                    <li>
+                        <a href="https://leetcode.cn/">Leetcode</a>
+                    </li>
+                    <li>
+                        <a href="https://www.nowcoder.com/">牛客网</a>
+                    </li>
+                    <li>
+                        <a href="#">快写完了1</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- 中间的盒子 -->
+            <div class="links_c">
+                <h3 class="links_title">嘿嘿</h3>
+                <ul class="links_list">
+                    <li>
+                        <a href="#">快写完了1</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- 右边的盒子 -->
+            <div class="links_r">
+                <h3 class="links_title">营销网络</h3>
+                <!-- <div class="map">
+                    <img src="./images/chicken1_09.jpg">
+                </div> -->
+            </div>
+        </div>
+
+    </div>
+    <!-- 页脚 -->
+    <div class="footer_con">
+        <!-- 页脚左边的盒子 -->
+        <p class="footer_l">
+            <a href="#">链接1</a>
+            <a href="#">链接2</a>
+            <a href="#">链接3</a>
+            <a href="#" class="footer-right">链接4</a>
+        </p>
+        <!-- 页脚右边的盒子 -->
+        <p class="footer_r">
+            我尽力注释了，给小小白看的容易，给自己更深刻咯
+        </p>
+    </div>
 </body>
+
 </html>

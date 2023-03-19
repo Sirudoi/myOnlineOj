@@ -4,7 +4,12 @@
 using namespace httplib;
 using namespace ns_compile_run;
 
-int main()
+void Usage(char argv[])
+{
+    std::cout << "please input#" << argv << " port" << std::endl;
+}
+ 
+int main(int argc, char* argv[])
 {
     // DEBUG编译运行:
     {
@@ -50,6 +55,11 @@ int main()
         // svr.listen("0.0.0.0", 8080);
     }
 
+    if (argc != 2)
+    {
+        Usage(argv[0]);
+    }
+
     Server svr;
 
     svr.Post("/compile_and_run", [](const Request& req, Response& resp){
@@ -58,12 +68,12 @@ int main()
         std::string out_str;
         if (!in_str.empty())
         {
-            CompileAndRun::StartCplAndRun(in_str, &out_str);
+            CompileAndRun::StartCplAndRun(in_str, out_str);
             resp.set_content(out_str, "application/json;charset=utf-8");
         }
     });
 
-    svr.listen("0.0.0.0", 8080);
+    svr.listen("0.0.0.0", std::atoi(argv[1]));
     // {
     //     //FOR DEBUG
     //     std::string in_str = R"({

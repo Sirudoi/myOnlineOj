@@ -100,8 +100,6 @@ namespace ns_runner
                 int status = 0;
                 waitpid(ret, &status, 0);
                 LOG(INFO) << " [子进程运行完毕 status:" << status  << "]" << std::endl;
-
-                LOG(INFO) << " [清理临时文件]" << std::endl;
                 //判断信号内容
                 return status & 0x7f;
             }

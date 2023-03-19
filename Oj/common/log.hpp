@@ -10,10 +10,10 @@ namespace ns_log
     // 日志等级
     enum 
     {
-        WARN, // 需要马上解决的错误
+        WARN,  // 需要马上解决的错误
         ERROR, // 有告警，不影响程序执行
-        INFO, // 日志信息
-        DEBUG // 用于debug
+        INFO,  // 日志信息
+        DEBUG  // 用于debug
     };
 
     // 将日志信息用标准输出流返回

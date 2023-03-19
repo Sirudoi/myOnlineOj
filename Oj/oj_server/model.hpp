@@ -23,8 +23,8 @@ namespace ns_model
         int cpu_limit;          // CPU限制，单位s
         int mem_limit;          // 内存限制，单位kb
 
-        std::string head;       // 用户预设代码，给用户coding
-        std::string tail;       // 测试用例代码，和head拼接
+        std::string head; // 用户预设代码，给用户coding
+        std::string tail; // 测试用例代码，和head拼接
     };
 
     class Model
@@ -34,9 +34,9 @@ namespace ns_model
         std::unordered_map<std::string, Question> _ques_map;
 
     public:
-        Model() 
+        Model()
         {
-            LoadQuestionConfig();
+            assert(LoadQuestionConfig());
         }
         ~Model() {}
 
@@ -57,7 +57,7 @@ namespace ns_model
 
                 // 读取questions.base中的题目信息
                 std::vector<std::string> tokens;
-                StringUtil::CutString(line, &tokens, " "); // 按照空格切分
+                StringUtil::CutString(line, tokens, " "); // 按照空格切分
 
                 if (tokens.size() != 5)
                 {
@@ -73,14 +73,14 @@ namespace ns_model
                 q.cpu_limit = std::stoi(tokens[3]);
                 q.mem_limit = std::stoi(tokens[4]);
 
-                // 读取用户代码，测试代码，题目描述
-                std::string head_path = g_ques_path + q.number + "head.cpp";
-                std::string tail_path = g_ques_path + q.number + "tail.cpp";
-                std::string desc_path = g_ques_path + q.number + "desc.txt";
+                // 读取用户预设代码，测试代码，题目描述
+                std::string head_path = g_ques_path + q.number + "/head.cpp";
+                std::string tail_path = g_ques_path + q.number + "/tail.cpp";
+                std::string desc_path = g_ques_path + q.number + "/description.txt";
 
-                FileUtil::ReadFile(head_path, &(q.head), true);
-                FileUtil::ReadFile(tail_path, &(q.tail), true);
-                FileUtil::ReadFile(desc_path, &(q.desc), true);
+                FileUtil::ReadFile(head_path, q.head, true);
+                FileUtil::ReadFile(tail_path, q.tail, true);
+                FileUtil::ReadFile(desc_path, q.desc, true);
 
                 // 插入到map中
                 _ques_map.insert(std::make_pair(q.number, q));
@@ -88,10 +88,12 @@ namespace ns_model
 
             LOG(INFO) << " [加载题库完成]" << std::endl;
             ifs.close();
+
+            return true;
         }
 
         // 获取所有题目
-        bool GetAllQuestions(std::vector<Question>* question_list)
+        bool GetAllQuestions(std::vector<Question> &question_list)
         {
             if (_ques_map.size() == 0)
             {
@@ -99,15 +101,15 @@ namespace ns_model
                 return false;
             }
 
-            for (const auto& it : _ques_map)
+            for (const auto &it : _ques_map)
             {
-                question_list->emplace_back(it.second);
+                question_list.emplace_back(it.second);
             }
             return true;
         }
 
         // 获取单个题目
-        bool GetOneQuestion(const std::string& number, Question* question)
+        bool GetOneQuestion(const std::string &number, Question &question)
         {
             if (_ques_map.size() == 0)
             {
@@ -119,7 +121,7 @@ namespace ns_model
             auto iter = _ques_map.find(number);
             if (iter != _ques_map.end())
             {
-                *question = iter->second;
+                question = iter->second;
                 return true;
             }
             else
